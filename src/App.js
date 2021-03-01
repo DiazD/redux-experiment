@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import { useDispatch } from "react-redux";
 import './App.css';
+import { usersUpdateList_, usersTogglePermissions } from "./store/actions";
+
+const testUser = {
+  id: 1,
+  name: "Bingo Dingo",
+  age: 25,
+  address: 1,
+  school: 1,
+  favorites: ["gaming", "food"],
+};
 
 function App() {
+  const dispatch = useDispatch();
+  const updateUsers = () => {
+    dispatch(usersUpdateList_(testUser));
+  };
+
+  const togglePermissions = () => {
+    dispatch(usersTogglePermissions());
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={togglePermissions}>
+        toggle permission
+      </button>
+      <button onClick={updateUsers}>
+        Click to update list
+      </button>
     </div>
   );
 }
