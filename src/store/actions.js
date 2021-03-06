@@ -27,18 +27,10 @@ export const usersTogglePermissions = registerAction({
 // });
 
 export const actions = bulkRegisterActions({
-  rootState: "users",
   actions: {
     usersUpdateList: {
       name: "USERS_UPDATE_LIST",
-      injectRootStateTo: ["byId"],
-      effects: {
-        list: merge,
-        byId: (state) => {
-          state.byId = computeIds(state.list);
-          return state;
-        },
-      }
+      effects: { users: merge }
     }
   }
 });
@@ -50,7 +42,28 @@ export const actions = bulkRegisterActions({
 handleAction({
   name: "USERS_UPDATE_LIST",
   handler: ({ permissions }, { payload }) => {
-    const list = permissions.userCanUpdateList ? { [payload.id]: payload } : undefined
-    return { list }
+    const users = permissions.userCanUpdateList ? { [payload.id]: payload } : undefined
+    return { users }
   }
 })
+
+export const phoneActions = bulkRegisterActions({
+  rootState: ["phonebooks"],
+  actions: {
+    updateFamilyPhonebook: {
+      name: "UPDATE_FAMILY_PHONEBOOK",
+      effects: { family: merge }
+    },
+    updateWorkPhonebook: {
+      name: "UPDATE_WORK_PHONEBOOK",
+      effects: { work: merge }
+    },
+  },
+});
+
+handleAction({
+  name: "UPDATE_FAMILY_PHONEBOOK",
+  handler: (_, { payload }) => ({
+    family: { [payload.id]: payload },
+  })
+});

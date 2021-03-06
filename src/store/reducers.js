@@ -1,9 +1,11 @@
 import { produce } from "immer";
-import { updateIn } from "./utils";
+import { updateIn, printState } from "./utils";
 
-const users = {
-  list: {},
-  byId: [],
+const users = {};
+
+const phonebooks = {
+  family: {},
+  work: {},
 }
 
 const permissions = {
@@ -11,10 +13,12 @@ const permissions = {
 };
 
 export const initialState = {
-  root: { users, permissions }
+  db: { users, permissions, phonebooks },
 };
 
 export const effects = {};  // the effects register that will be used  by root reducer
+
+export const rootDbPath = "db";
 
 // imagine adding a lot of cases and creating multiple reducers
 // adding more action types and actions and reducers is a lot of
@@ -31,7 +35,8 @@ const reducer = produce(
     } = effects[action.type] || {};
 
     if (_effects) {
-      let basePath = [rootState];
+      let basePath = rootState ? [rootState] : [];
+      console.log("BASE", printState(base), basePath);
       Object.entries(_effects).map(([path, reductionFn]) => {
         // lets calculate the path we need to work on
         const statePath = injectRootStateTo.includes(path) ? basePath : [...basePath, path];

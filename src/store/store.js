@@ -12,7 +12,7 @@ import { parseData } from "./loadData";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const root = combineReducers({
-  root: rootReducer
+  db: rootReducer
 });
 
 const store = createStore(

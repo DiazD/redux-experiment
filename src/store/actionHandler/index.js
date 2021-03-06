@@ -11,7 +11,7 @@
 //
 // So the actions API will create an action for us and register the
 // effects and other meta data to the effects register.
-import { effects } from "../reducers";
+import { effects, rootDbPath } from "../reducers";
 
 export const registerAction = ({
   name,                     // name of our action
@@ -50,7 +50,7 @@ export const bulkRegisterActions = ({
 }) => {
   const actionHandlers = {};
   Object.entries(actions).forEach(([functionName, action]) => {
-    const actionHandler = registerAction({ ...action, rootState });
+    const actionHandler = registerAction({ rootState, ...action });
     actionHandlers[functionName] = actionHandler;
   });
   return actionHandlers;
