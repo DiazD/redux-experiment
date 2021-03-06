@@ -1,22 +1,24 @@
 import { produce } from "immer";
-import { updateIn, printState } from "./utils";
+import { updateIn } from "./utils";
+import { effects } from "./actionHandler";
 
-const users = {};
+// different actions
+import { phonebookInitialState } from "./phonebook";
+import { userInitialState } from "./users";
+import { addressInitialState } from "./address";
 
-const phonebooks = {
-  family: {},
-  work: {},
-}
-
+// TODO: move permissions to it's own folder
 const permissions = {
   userCanUpdateList: true,
 };
-
 export const initialState = {
-  db: { users, permissions, phonebooks },
+  db: {
+    users: userInitialState,
+    permissions: permissions,
+    phonebooks: phonebookInitialState,
+    address: addressInitialState,
+  },
 };
-
-export const effects = {};  // the effects register that will be used  by root reducer
 
 export const rootDbPath = "db";
 
@@ -36,13 +38,10 @@ const reducer = produce(
 
     if (_effects) {
       let basePath = rootState ? [rootState] : [];
-      console.log("BASE", printState(base), basePath);
-      Object.entries(_effects).map(([path, reductionFn]) => {
+      Object.entries(_effects).forEach(([path, reductionFn]) => {
         // lets calculate the path we need to work on
         const statePath = injectRootStateTo.includes(path) ? basePath : [...basePath, path];
 
-        // TODO: add a new api to `meta` to allow injection of new
-        // reducing function
         const { effects: effectsOverride = {} } = meta;
         const handler = effectsOverride[path] || reductionFn
 

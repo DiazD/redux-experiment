@@ -11,13 +11,13 @@
 //
 // So the actions API will create an action for us and register the
 // effects and other meta data to the effects register.
-import { effects, rootDbPath } from "../reducers";
-
+export const effects = {};
 export const registerAction = ({
   name,                     // name of our action
   rootState,                // state slice that this action targets
   injectRootStateTo = [],   // injects the state slice pointed by `rootState` rather than the state pointed by the effect attribute.
   effects: _effects,                   // an object of state key to reducing function
+  meta: defaultMeta = {},                // default meta-data
 }) => {
   if (!name && !rootState && !_effects) {
     throw new Error(
@@ -35,10 +35,10 @@ export const registerAction = ({
   };
 
   // create an action
-  const action = (payload = {}, meta = {}) => ({
+  const action = (payload = {}, meta = defaultMeta) => ({
     type: name,
     payload,
-    meta,
+    meta: { ...defaultMeta, ...meta },
   })
   action.toString = () => name;
   return action;

@@ -1,6 +1,8 @@
 import { useDispatch } from "react-redux";
 import './App.css';
-import { actions, usersTogglePermissions, phoneActions } from "./store/actions";
+import { usersTogglePermissions } from "./store/actions";
+import users from "./store/users";
+import phonebook from "./store/phonebook";
 
 const filter = (map, ids) => {
   ids.forEach((id) => {
@@ -36,7 +38,7 @@ const testWorkPhonebook = {
 function App() {
   const dispatch = useDispatch();
   const updateUsers = () => {
-    dispatch(actions.usersUpdateList(testUser));
+    dispatch(users.actions.updateUsersList(testUser));
   };
 
   const togglePermissions = () => {
@@ -44,20 +46,20 @@ function App() {
   };
 
   const filterOutUser = () => {
-    dispatch(actions.usersUpdateList(
+    dispatch(users.actions.updateUsersList(
       { users: [1] },
       { effects: { users: filter }, skipActionMW: true },
     ));
   };
 
   const updateFamilyphonebook = () => {
-    dispatch(phoneActions.updateFamilyPhonebook(
+    dispatch(phonebook.actions.updateFamilyPhonebook(
       testPhonebook
     ));
   };
 
   const updateWorkphonebook = () => {
-    dispatch(phoneActions.updateWorkPhonebook({
+    dispatch(phonebook.actions.updateWorkPhonebook({
       work: { [testWorkPhonebook.id]: testWorkPhonebook }
     }));
   };
