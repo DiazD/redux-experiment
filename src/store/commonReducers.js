@@ -15,8 +15,10 @@ export const deepMerge = (source, newValue) => {
     source,
   );
 };
+export const complement = (state) => !state;
+
+// not reducers
 export const getKey = (prop) => (coll) => {
   return Object.values(coll).map((item) => item[prop]);
 }
 export const getIds = getKey("id");
-export const complement = (state) => !state;

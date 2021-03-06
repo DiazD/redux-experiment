@@ -23,7 +23,6 @@ export const effects = {};  // the effects register that will be used  by root r
 // lets create an abstraction to help us do most of these things.
 const reducer = produce(
   (base, action) => {
-    // NEW WAY
     const { payload, meta } = action;
     const {
       effects: _effects,
@@ -39,11 +38,11 @@ const reducer = produce(
 
         // TODO: add a new api to `meta` to allow injection of new
         // reducing function
+        const { effects: effectsOverride = {} } = meta;
+        const handler = effectsOverride[path] || reductionFn
 
         // update the state based on the path
-        console.log("BOOOOM", statePath, reductionFn);
-        updateIn(statePath, base, reductionFn, payload[path], meta);
-        console.log("BASE", JSON.parse(JSON.stringify(base)));
+        updateIn(statePath, base, handler, payload[path], meta);
       })
     }
   },

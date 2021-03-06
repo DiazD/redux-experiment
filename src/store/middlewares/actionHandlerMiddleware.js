@@ -1,13 +1,15 @@
+import { getIn } from "../utils";
 
 const actionsRegistry = {};
 const actionHandlerMiddleware = (store) => (next) => (action) => {
   const handler = actionsRegistry[action.type];
+  const skipStep = getIn(["meta", "skipActionMW"], action, false);
 
-  if (handler) {
+  if (handler && !skipStep) {
     const state = store.getState();
     return next({
       ...action,
-      payload: handler(state.root, action)
+      payload: { ...action.payload, ...handler(state.root, action) }
     });
   };
 
