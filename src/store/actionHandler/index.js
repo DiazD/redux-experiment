@@ -43,3 +43,15 @@ export const registerAction = ({
   action.toString = () => name;
   return action;
 };
+
+export const bulkRegisterActions = ({
+  rootState,
+  actions,
+}) => {
+  const actionHandlers = {};
+  Object.entries(actions).forEach(([functionName, action]) => {
+    const actionHandler = registerAction({ ...action, rootState });
+    actionHandlers[functionName] = actionHandler;
+  });
+  return actionHandlers;
+}

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import './App.css';
-import { usersUpdateList_, usersTogglePermissions } from "./store/actions";
+import { actions, usersTogglePermissions } from "./store/actions";
 
 const filter = (map, ids) => {
   ids.forEach((id) => {
@@ -21,7 +21,7 @@ const testUser = {
 function App() {
   const dispatch = useDispatch();
   const updateUsers = () => {
-    dispatch(usersUpdateList_(testUser));
+    dispatch(actions.usersUpdateList(testUser));
   };
 
   const togglePermissions = () => {
@@ -29,7 +29,7 @@ function App() {
   };
 
   const filterOutUser = () => {
-    dispatch(usersUpdateList_(
+    dispatch(actions.usersUpdateList(
       { list: [1] },
       { effects: { list: filter }, skipActionMW: true },
     ));
