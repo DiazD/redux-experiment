@@ -6,6 +6,7 @@ import { effects } from "./actionHandler";
 import { phonebookInitialState } from "./phonebook";
 import { userInitialState } from "./users";
 import { addressInitialState } from "./address";
+import { archiveInitialState } from "./archive";
 
 // TODO: move permissions to it's own folder
 const permissions = {
@@ -17,6 +18,7 @@ export const initialState = {
     permissions: permissions,
     phonebooks: phonebookInitialState,
     address: addressInitialState,
+    archive: archiveInitialState,
   },
 };
 

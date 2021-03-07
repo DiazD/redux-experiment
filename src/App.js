@@ -1,8 +1,16 @@
 import { useDispatch } from "react-redux";
 import './App.css';
-import { usersTogglePermissions } from "./store/actions";
+
+// components
+import Section from "./components/Section";
+
+// containers
+import Users from "./containers/Users";
+
+// redux related
 import users from "./store/users";
 import phonebook from "./store/phonebook";
+import { usersTogglePermissions } from "./store/actions";
 
 const filter = (map, ids) => {
   ids.forEach((id) => {
@@ -66,8 +74,7 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <h4>User reducer controls</h4>
+      <Section header="User controls">
         <button onClick={togglePermissions}>
           toggle permission
         </button>
@@ -77,16 +84,16 @@ function App() {
         <button onClick={filterOutUser}>
           Filter User with Id 1
         </button>
-      </div>
-      <div>
-        <h4>phonebook controls</h4>
+        <Users />
+      </Section>
+      <Section header="phonebook controls">
         <button onClick={updateFamilyphonebook}>
           Add one to family phonebook
         </button>
         <button onClick={updateWorkphonebook}>
           Add one to work phonebook
         </button>
-      </div>
+      </Section>
     </div>
   );
 }

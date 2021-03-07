@@ -1,0 +1,18 @@
+.scrollable-container {
+    overflow-y: scroll;
+    height: 550px;
+}
+
+.detail-container {
+    text-align: left;
+}
+
+.detail-header {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.detail-wrapper {
+    display: flex;
+    justify-content: space-between;
+}

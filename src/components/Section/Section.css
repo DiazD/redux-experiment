@@ -1,0 +1,9 @@
+.section-container {
+    border: 1px solid gray;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.section-header {
+    font-weight: bold;
+}

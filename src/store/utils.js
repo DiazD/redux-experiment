@@ -15,21 +15,6 @@ export const updateIn = (path, map, reducingFn, ...extraArgs) => {
   parent[lastKey] = newValue;
 };
 
-
-// immer hack to be able to view our state during `produce`
-// otherwise we see proxy
-export const printState = (state) => JSON.parse(JSON.stringify(state));
-
-export const identity = (x) => x;
-
-export const normalizeOne = (item) => ({ [item.id]: item });
-
-export const normalize = (coll) =>
-  coll.reduce((acc, item) => {
-    acc[item.id] = item;
-    return acc;
-  }, {});
-
 // selectors helper
 export const createCachedSelector = cs;
 export const createSelector =
@@ -54,3 +39,24 @@ export const createSelectors = ({ basePath, selectors }) => {
   });
   return selectors_;
 }
+
+// immer hack to be able to view our state during `produce`
+// otherwise we see proxy
+export const printState = (state) => JSON.parse(JSON.stringify(state));
+
+export const identity = (x) => x;
+
+export const normalizeOne = (item) => ({ [item.id]: item });
+
+export const normalize = (coll) =>
+  coll.reduce((acc, item) => {
+    acc[item.id] = item;
+    return acc;
+  }, {});
+
+// potentially different use cases
+// in case we save items in an array for some reason
+export const matchByEq = (payload) => (item) => payload === item;
+export const matchById = ({ id: pid }) => ({ id }) => pid === id;
+export const matchByPayloadId = ({ id }) => (item) => id === item;
+export const matchByItemId = (payload) => ({ id }) => payload === id;
