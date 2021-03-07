@@ -85,8 +85,8 @@ const updateUsersList = registerAction({
 ```
 
 1. We register our action name
-2. We register an effect on `users`, `shallowMerge` this is the update strategy between our current data and new data.
-3. We register an effect on `loading`, `constantly` just returns the value you provide as an argument and replace whatever value is in state.
+2. We register a reducing function on `users`, `shallowMerge` this is the update strategy between our current data and new data.
+3. We register a reducing function on `loading`, `constantly` just returns the value you provide as an argument and replace whatever value is in state.
 
 RegisterAction returns for us a regular actionCreator function and registers the effects that will be handled by our reducer.
 
