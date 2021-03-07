@@ -3,7 +3,7 @@ It's tiring writing all the boilerplate with redux. Not just that, when reading 
 
 - Find the actionCreator function
 - Look at the action-type
-- Find the reducing function(s) that handle that action
+- Find the reducing function(s) that handles that action
 - Read the reducer code for that action-type
 
 Instead what I want to do is not write reducer boilerplate and be able to read my `actionCreator` and see what effects it has to the world.
@@ -41,12 +41,23 @@ const updateList = (payload, meta = {}) => ({
 
 // or if you create a wrapper around actionCreators it could turn into
 const updateList = createAction("UPDATE_LIST");
+
+// sample reducer of how it would handle it
+
+...
+switch(action.type) {
+  case UPDATE_LIST: {
+    state.users = action.payload;
+    state.loading = false;
+  }
+}
+...
 ```
 
 `updateList` doesn't really tell me that it's going to update some loading state. It's obviously a terrible name but we could make it better by calling it `updateUsersList`. However this tells what what resource we're updating, great, but it doesn't tell us what other effects are happening.
 
 ### Small Solution
-This repo explores a way to reduce boilerplate by making `actionCreators` more declaritive and removing the need to write `reducers`.
+This repo explores a way to reduce boilerplate by making `actionCreators` more declaritive and removing the need to write `reducers`(the switch statement type).
 The main idea is that we want `actionCreators` to describe how it will affect our state and `reducers` turning into generic reducing functions.
 
 Here's a little preview of how it would look like:
@@ -68,7 +79,7 @@ const updateUsersList = registerAction({
   name: "UPDATE_USERS_LIST",     // 1
   effects: {
     users: shallowMerge,         // 2
-	loading: constantly(false),  // 3
+    loading: constantly(false),  // 3
   }
 })
 ```
