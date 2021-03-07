@@ -1,5 +1,5 @@
 ### Redux Experiment
-It's tiring writing all the boilerplate with redux. Not just that, when reading code we see an `action` being dispatched and in order to find out what changes it causes we have to
+It's tiring writing all the boilerplate with redux. Not just that, when reading code we see an `action` being dispatched and in order to find out what changes it causes, we have to do the following:
 
 - Find the actionCreator function
 - Look at the action-type
