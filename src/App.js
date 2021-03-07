@@ -61,12 +61,22 @@ function App() {
   };
 
   const updateFamilyphonebook = () => {
+    // this action does have a handleAction registered
+    // so we can dispatch by just passing the payload and letes the
+    // registered handler do the transformation function
     dispatch(phonebook.actions.updateFamilyPhonebook(
       testPhonebook
     ));
   };
 
   const updateWorkphonebook = () => {
+    // this action does not have a handleAction registered
+    // so we have to provide the proper `key` so that effects
+    // function reads from it when reducing state.
+    //
+    // for small payloads this makes sense, but for bigger payloads
+    // you'll probably want to register a transformation function with
+    // handleAction.
     dispatch(phonebook.actions.updateWorkPhonebook({
       work: { [testWorkPhonebook.id]: testWorkPhonebook }
     }));
