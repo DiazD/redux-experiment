@@ -19,7 +19,7 @@ export const registerAction = ({
   effects: _effects,                   // an object of state key to reducing function
   meta: defaultMeta = {},                // default meta-data
 }) => {
-  if (!name && !rootState && !_effects) {
+  if (!name || !_effects) {
     throw new Error(
       "name, rootState and effects are required arguments"
     );

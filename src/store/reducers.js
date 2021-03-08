@@ -1,12 +1,15 @@
 import { produce } from "immer";
-import { updateIn } from "./utils";
+import { updateIn, getIn } from "./utils";
 import { effects } from "./actionHandler";
 
-// different actions
+// initial states
 import { phonebookInitialState } from "./phonebook";
 import { userInitialState } from "./users";
 import { addressInitialState } from "./address";
 import { archiveInitialState } from "./archive";
+
+// ui initial states
+import { uiUsersState } from "./ui/users";
 
 // TODO: move permissions to it's own folder
 const permissions = {
@@ -20,18 +23,18 @@ export const initialState = {
     address: addressInitialState,
     archive: archiveInitialState,
   },
-};
-
-export const rootDbPath = "db";
-
+  ui: {
+    usersList: uiUsersState,
+  }
+}
 // imagine adding a lot of cases and creating multiple reducers
 // adding more action types and actions and reducers is a lot of
 // boilerplate.
 
 // lets create an abstraction to help us do most of these things.
-const reducer = produce(
+const createReducer = (initialState) => produce(
   (base, action) => {
-    const { payload, meta } = action;
+    const { payload = {}, meta } = action;
     const {
       effects: _effects,
       rootState,
@@ -44,16 +47,23 @@ const reducer = produce(
         // lets calculate the path we need to work on
         const statePath = injectRootStateTo.includes(path) ? basePath : [...basePath, path];
 
-        const { effects: effectsOverride = {} } = meta;
-        const handler = effectsOverride[path] || reductionFn
+        // ignore this reducer if the path is undefined
+        // meaning another reducer should handle it.
+        if (getIn(statePath, base) !== undefined) {
+          const { effects: effectsOverride = {} } = meta;
+          const handler = effectsOverride[path] || reductionFn
 
-        // update the state based on the path
-        updateIn(statePath, base, handler, payload[path], meta);
+          // update the state based on the path
+          updateIn(statePath, base, handler, payload[path], meta);
+        }
       })
     }
   },
-  initialState
-);
+  initialState,
+)
 
+// Handles normalized data
+export const db = createReducer(initialState);
 
-export default reducer;
+// Handles shared state between components
+export const ui = createReducer(initialState);
