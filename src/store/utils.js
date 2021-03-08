@@ -2,7 +2,8 @@ import { createSelector as cs } from "reselect";
 
 export const getIn = (path, map, defaultValue = undefined) => {
   return path.reduce((acc, step) => {
-    if (acc[step] === undefined || !acc || acc === undefined) return defaultValue;
+    if (!acc || acc === undefined) return defaultValue;
+    if (acc[step] === undefined) return defaultValue;
     return acc[step];
   }, map);
 };

@@ -11,21 +11,14 @@ import Users from "./containers/Users";
 import users from "./store/users";
 import phonebook from "./store/phonebook";
 import { usersTogglePermissions } from "./store/actions";
+import uiUsers from "./store/ui/users";
 
+// TODO: move this to common reducers
 const filter = (map, ids) => {
   ids.forEach((id) => {
     delete map[id];
   });
   return map;
-};
-
-const testUser = {
-  id: 1,
-  name: "Bingo Dingo",
-  age: 25,
-  address: 1,
-  school: 1,
-  favorites: ["gaming", "food"],
 };
 
 const testPhonebook = {
@@ -45,8 +38,8 @@ const testWorkPhonebook = {
 
 function App() {
   const dispatch = useDispatch();
-  const updateUsers = () => {
-    dispatch(users.actions.updateUsersList(testUser));
+  const toggleCanDelete = () => {
+    dispatch(uiUsers.actions.toggleCanDelete());
   };
 
   const togglePermissions = () => {
@@ -88,8 +81,8 @@ function App() {
         <button onClick={togglePermissions}>
           toggle permission
         </button>
-        <button onClick={updateUsers}>
-          Click to update list
+        <button onClick={toggleCanDelete}>
+          Toggle Delete Buttons
         </button>
         <button onClick={filterOutUser}>
           Filter User with Id 1

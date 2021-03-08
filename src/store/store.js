@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 
 // root-reducer
-import rootReducer, { initialState } from "./reducers";
+import { initialState, db, ui } from "./reducers";
 
 // middlewares
 import actionHandlerMiddleware from "./middlewares/actionHandlerMiddleware";
@@ -9,7 +9,8 @@ import actionHandlerMiddleware from "./middlewares/actionHandlerMiddleware";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const root = combineReducers({
-  db: rootReducer
+  db,
+  ui,
 });
 
 const store = createStore(

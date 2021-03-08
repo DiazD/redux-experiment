@@ -7,9 +7,11 @@ import Section from "../../components/Section";
 
 // redux
 import users from "../../store/users";
+import uiUsers from "../../store/ui/users";
 
 const UsersList = () => {
   const usersList = useSelector(users.selectors.getUsersArraySelector);
+  const canDelete = useSelector(uiUsers.selectors.canDeleteUserSelector);
   const dispatch = useDispatch();
 
   const removeUser = (id) => () =>
@@ -33,7 +35,7 @@ const UsersList = () => {
             </div>
             <div>
               <div className="detail-actions-container">
-                <button onClick={removeUser(user.id)}>delete</button>
+                <button disabled={!canDelete} onClick={removeUser(user.id)}>delete</button>
               </div>
             </div>
           </div>
