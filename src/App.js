@@ -70,9 +70,7 @@ function App() {
     // for small payloads this makes sense, but for bigger payloads
     // you'll probably want to register a transformation function with
     // handleAction.
-    dispatch(phonebook.actions.updateWorkPhonebook({
-      work: { [testWorkPhonebook.id]: testWorkPhonebook }
-    }));
+    dispatch(phonebook.actions.updateWorkPhonebook(testWorkPhonebook));
   };
 
   return (

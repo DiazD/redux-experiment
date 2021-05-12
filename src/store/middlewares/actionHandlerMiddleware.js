@@ -9,7 +9,7 @@ const actionHandlerMiddleware = (store) => (next) => (action) => {
     const state = store.getState();
     return next({
       ...action,
-      payload: { ...action.payload, ...handler(state.db, action) }
+      payload: handler(state.db, action)
     });
   };
 

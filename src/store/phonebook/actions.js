@@ -27,6 +27,6 @@ handleAction({
 handleAction({
   name: "UPDATE_WORK_PHONEBOOK",
   handler: (_, { payload }) => ({
-    family: normalizeOne(payload),
+    work: normalizeOne(payload),
   })
 });
