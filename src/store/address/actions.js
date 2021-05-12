@@ -12,7 +12,7 @@ export const actions = bulkRegisterActions({
     },
     updateOneAddress: {
       name: "ADDRESS_UPDATE_ONE",
-      effects: insertOrUpdateOne
+      effects: { address: insertOrUpdateOne }
     }
   }
 });
